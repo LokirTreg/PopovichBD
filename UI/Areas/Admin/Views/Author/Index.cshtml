@@ -1,0 +1,77 @@
+﻿@model AuthorBookViewModel
+
+@{
+	ViewBag.Title = "Авторы";
+    var pagedList = Html.PagedList(Model.author_Model.PagesInfo.ItemsCount, Model.author_Model.PagesInfo.ItemsPerPage, Model.author_Model.PagesInfo.CurrentPage,
+        Model.author_Model.PagesInfo.DisplayedPages, pageNumber => Url.Action(Url.GetAction(), new
+		{
+			page = pageNumber
+		}), new PagedListExtensions.PagedListRenderParams());
+}
+@if (User.IsInRole(nameof(UserRole.Developer)))
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <a asp-action="Update" class="btn btn-outline-primary">Добавить</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div class="row">
+	<div class="col-md-12">
+		@pagedList
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<tr>
+					<th class="text-center">ID</th>
+					<th class="text-center">Имя</th>
+					<th class="text-center">Книги</th>
+                    @if (User.IsInRole(nameof(UserRole.Developer)))
+                    {
+					<th class="text-center">Действия</th>
+                    }
+				</tr>
+                @foreach (var author in Model.author_Model.Objects)
+				{
+                    var book_author = Model.book_author_Model.Objects.Where(book_author => book_author.IdAuthor == author.Id).ToList();
+                    List<BookModel> book = new List<BookModel>();
+                        <tr>
+						<td class="text-center">
+                            @author.Id
+						</td>
+						<td class="text-center">
+                            @author.Name
+						</td>
+                        <td class="text-center">
+                            @foreach (var i in book_author)
+                            {
+                                book = Model.book_Model.Objects.Where(book => book.Id == i.IdBook).ToList();
+                                @Html.Raw(string.Join(", ", book.Select(s => string.Format("<{0}>", s.Title))))
+                            }
+                        </td>@if (User.IsInRole(nameof(UserRole.Developer)))
+                        {
+                            <td class="text-center">
+                                <a asp-action="Update" asp-route-id="@author.Id">Изменить</a><br />
+                                <a asp-action="Delete" asp-route-id="@author.Id" class="delete-object-button">Удалить</a>
+                            </td>
+                        }
+                    </tr>
+				}
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		@pagedList
+	</div>
+</div>

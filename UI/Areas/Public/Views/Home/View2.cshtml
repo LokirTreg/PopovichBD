@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewData["Title"] = "View2";
+}
+@model List<UI.Areas.Public.Models.View2ViewModel>
+
+<h1>View2</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Имя Читатаеля</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>

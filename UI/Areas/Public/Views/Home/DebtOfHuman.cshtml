@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewData["Title"] = "DebtOfHuman";
+}
+@model List<UI.Areas.Public.Models.DebtOfHumanViewModel>
+<h1>DebtOfHuman</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Сумма долга</th>
+            <th>Имя должника</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+                <tr>
+                    <td>@item.DebtSum</td>
+                    <td>@item.Name</td>
+                </tr>
+    }
+        </tbody>
+        </table>

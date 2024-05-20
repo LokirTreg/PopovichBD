@@ -1,0 +1,69 @@
+﻿@model Copy_of_BookViewModel
+
+@{
+	ViewBag.Title = "Copy_of_book";
+	var pagedList = Html.PagedList(Model.copy_of_Book_Model.PagesInfo.ItemsCount, Model.copy_of_Book_Model.PagesInfo.ItemsPerPage, Model.copy_of_Book_Model.PagesInfo.CurrentPage,
+		Model.copy_of_Book_Model.PagesInfo.DisplayedPages, pageNumber => Url.Action(Url.GetAction(), new
+		{
+			page = pageNumber
+		}), new PagedListExtensions.PagedListRenderParams());
+}
+@if (User.IsInRole(nameof(UserRole.Developer)))
+                    {
+<div class="row">
+	<div class="col-md-12">
+		<div class="card mb-3">
+			<div class="card-body">
+				<a asp-action="Update" class="btn btn-outline-primary">Добавить</a>
+			</div>
+		</div>
+	</div>
+</div>
+                    }
+<div class="row">
+	<div class="col-md-12">
+		@pagedList
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<tr>
+					<th class="text-center">Инвентарный номер</th>
+					<th class="text-center">Книга</th>
+                    @if (User.IsInRole(nameof(UserRole.Developer)))
+                    {
+                        <th class="text-center">Действия</th>
+                    }
+                </tr>
+                @foreach (var copy_of_Book in Model.copy_of_Book_Model.Objects)
+                {
+                    var book = Model.book_Model.Objects.Where(book => book.Id == copy_of_Book.IdBook).ToList();
+					<tr>
+						<td class="text-center">
+                            @copy_of_Book.Id
+						</td>
+                        <td class="text-center">
+                            @Html.Raw(string.Join(", ", book.Select(s => string.Format("{0}", s.Title))))
+                        </td>
+                        @if (User.IsInRole(nameof(UserRole.Developer)))
+                        {
+                            <td class="text-center">
+                                <a asp-action="Update" asp-route-id="@copy_of_Book.Id">Изменить</a><br />
+                                <a asp-action="Delete" asp-route-id="@copy_of_Book.Id" class="delete-object-button">Удалить</a>
+                            </td>
+                        }
+                    </tr>
+				}
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		@pagedList
+	</div>
+</div>

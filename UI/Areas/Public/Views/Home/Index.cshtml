@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Main page";
+}
+@model int
+
+<h1>Тема 8</h1>
+<a class="btn btn-primary @(Url.GetController() == "Author" ? "active" : "")" asp-area="Admin" asp-controller="Author" asp-action="Index">
+    Админская панель
+</a>
+
+<div class="form-section">
+    <h2>Процедуры:</h2>
+
+    <form asp-area="Public" asp-controller="Home" asp-action="CountOfCopies" method="post">
+        <label for="title">Название:</label>
+        <input type="text" id="title" name="title" required />
+        <button type="submit">Количество копий книги</button>
+    </form>
+
+    <form asp-area="Public" asp-controller="Home" asp-action="DebtOfHuman" method="post">
+        <label for="nameofdebtor">Имя:</label>
+        <input type="text" id="nameofdebtor" name="nameofdebtor" required>
+        <button type="submit">Долг человека</button>
+    </form>
+</div>
+
+<div class="form-section">
+    <h2>Представления:</h2>
+
+    <form asp-area="Public" asp-controller="Home" asp-action="View1" method="post">
+        <button type="submit">Книги и их авторы с "Океан в названии"</button>
+    </form>
+
+    <form asp-area="Public" asp-controller="Home" asp-action="View2" method="post">
+        <button type="submit">Яны читатели</button>
+    </form>
+    <form asp-area="Public" asp-controller="Home" asp-action="View3" method="post">
+        <button type="submit">Библиотекари выдавшие больше одной книги и эти книги</button>
+    </form>
+</div>

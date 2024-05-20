@@ -1,0 +1,44 @@
+﻿@model BookGenreModel
+
+@{
+	var exists = Model != null && Model.Id != 0;
+	ViewBag.Title = (exists ? "Редактирование" : "Создание") + " Связи книга жанр";
+}
+<script type="text/javascript">
+    function SetIdGenre() {
+        $("#IdGenre").val($('#drpIdGenreList option:selected').val())
+    }
+    function SetIdBook() {
+        $("#IdBook").val($('#drpIdBookList option:selected').val())
+    }
+</script>
+<form asp-action="Update" asp-antiforgery="true" method="post">
+    <div class="col-md-4 col-sm-6">
+        <label class="control-label">Автор</label>
+        <input required type="hidden" asp-for="IdGenre" value="hidden" value="" />
+        <select required id="drpIdGenreList" asp-for="IdGenre" name="drpIdGenreList" class="form-control" asp-items="@ViewBag.IdGenre" onchange="SetIdGenre()">
+            <option value=''>--выбрать группу--</option>
+        </select>
+    </div>
+
+    <div class="col-md-4 col-sm-6">
+        <label class="control-label">Книга</label>
+        <input required type="hidden" asp-for="IdBook" value="hidden" value="" />
+        <select required id="drpIdBookList" asp-for="IdBook" name="drpIdBookList" class="form-control" asp-items="@ViewBag.IdBook" onchange="SetIdBook()">
+            <option value=''>--выбрать группу--</option>
+        </select>
+    </div>
+	<div class="row">
+		<div class="col-md-12 text-center">
+			<button class="btn btn-outline-primary" type="submit">@(exists ? "Сохранить" : "Добавить")</button>
+			<a asp-action="Index" class="btn btn-outline-secondary">Отмена</a>
+		</div>
+	</div>
+</form>
+
+<script>
+    $(document).ready(function () {
+        $("#IdGenre").val($('#drpIdGenreList option:selected').val())
+        $("#IdBook").val($('#drpIdBookList option:selected').val())
+    });
+</script>

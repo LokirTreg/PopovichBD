@@ -1,0 +1,24 @@
+﻿@model List<UI.Areas.Public.Models.View3ViewModel>
+@{
+    ViewData["Title"] = "View3";
+}
+
+<h1>View3</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Имя Библиотеки</th>
+            <th>Название Книги</th>
+            <th>Инвентарный номер</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+                <td>@item.Name_Libra</td>
+                <td>@item.Title</td>
+                <td>@item.Inventor_Nubmber</td>
+        }
+    </tbody>
+</table>
